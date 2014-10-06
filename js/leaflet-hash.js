@@ -23,11 +23,31 @@
 		});
 	};
 
+	L.Hash.parseParams = function(str) {
+		if (!str || str == "") {
+			return undefined;
+		}
+		var pieces = str.split("&"), data = {}, i, parts;
+	    // process each query pair
+	    for (i = 0; i < pieces.length; i++) {
+	        parts = pieces[i].split("=");
+	        if (parts.length < 2) {
+	            parts.push("");
+	        }
+	        data[decodeURIComponent(parts[0])] = decodeURIComponent(parts[1]);
+	    }
+	    return data;
+	}
+
 	L.Hash.parseHash = function(hash) {
 		if(hash.indexOf('#') === 0) {
 			hash = hash.substr(1);
 		}
-		var args = hash.split("/");
+		var hash_obj  = this.parseParams(hash);
+		if (!hash_obj) {
+			return false;
+		}
+		var args = hash_obj.loc.split(",");
 		if (args.length == 3) {
 			var zoom = parseInt(args[0], 10),
 			lat = parseFloat(args[1]),
@@ -35,10 +55,18 @@
 			if (isNaN(zoom) || isNaN(lat) || isNaN(lon)) {
 				return false;
 			} else {
-				return {
+				var query = hash_obj.q ? hash_obj.q : null;
+				var return_obj = {
 					center: new L.LatLng(lat, lon),
 					zoom: zoom
 				};
+				if (query) {
+					if (this.lastSearchQuery != query) {
+						this.lastSearchQuery = query;
+					}
+					return_obj['q'] = query;
+				}
+				return return_obj;
 			}
 		} else {
 			return false;
@@ -52,25 +80,31 @@
 
 		this.triggerEvent(center, zoom);
 
-		return "#" + [zoom,
+		var loc = "#loc=" + [zoom,
 			center.lat.toFixed(precision),
 			center.lng.toFixed(precision)
-		].join("/");
+		].join(",");
+
+		var query = this.lastSearchQuery ? "&q=" + this.lastSearchQuery : "";
+		return loc + query;
 	},
 
 	L.Hash.prototype = {
 		map: null,
 		lastHash: null,
+		lastSearchQuery: null,
 
 		parseHash: L.Hash.parseHash,
 		formatHash: L.Hash.formatHash,
 		triggerEvent: L.Hash.triggerEvent,
+		parseParams: L.Hash.parseParams,
 
 		init: function(map) {
 			this.map = map;
 
 			// reset the hash
 			this.lastHash = null;
+			this.lastSearchQuery = null;
 			this.onHashChange();
 
 			if (!this.isListening) {
@@ -144,6 +178,13 @@
 		hashChangeInterval: null,
 		startListening: function() {
 			this.map.on("moveend", this.onMapMove, this);
+			var that = this;
+			$(document).on("pelias:fullTextSearch", function(e){
+				if (that.lastSearchQuery != e.text) {
+					that.lastSearchQuery = e.text;
+					that.onMapMove();
+				}
+			});
 
 			if (HAS_HASHCHANGE) {
 				L.DomEvent.addListener(window, "hashchange", this.onHashChange);

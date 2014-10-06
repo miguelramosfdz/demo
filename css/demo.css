@@ -74,6 +74,10 @@ ul.results li {
   overflow: hidden;
 }
 
+ul.results li a {
+  cursor: pointer;
+}
+
 .aside {
   position:absolute;
   top:0px;
@@ -93,4 +97,10 @@ ul.results li {
   -moz-border-radius-bottomright: 0px;
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
+}
+/* small mobile devices */
+@media(max-width:767px){
+  #searchbar {
+    width:250px;
+  }
 }
