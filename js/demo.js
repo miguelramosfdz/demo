@@ -173,7 +173,7 @@ app.controller('SearchController', function($scope, $rootScope, $sce, $http) {
   $scope.search = '';
   $scope.searchresults = [];
   $scope.suggestresults = [];
-  $scope.api_url = '//pelias.mapzen.com';
+  $scope.api_url = '//54.164.17.151:8080';
 
   $scope.selectResult = function( result, changeQuery ){
     resultSelected(result.properties.text, result.geometry.coordinates, changeQuery)
