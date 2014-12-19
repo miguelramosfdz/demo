@@ -9,13 +9,11 @@ L.Control.Locations = L.Control.extend({
         position: 'topleft',
         icon: 'glyphicon-th-list glyphicon',
         locations: [
-            {'loc': [51.505, -0.124], 'zoom': 12, 'name': 'London'},
             {'loc': [40.7259253, -73.9805603], 'zoom': 12, 'name': 'New York'},
-            {'loc': [48.858864, 2.346986], 'zoom': 12, 'name': 'Paris'},
-            {'loc': [40.4127118, -3.7034225], 'zoom': 12, 'name': 'Madrid'},
-            {'loc': [28.6457035, 77.2356033], 'zoom': 12, 'name': 'Delhi'},
-            {'loc': [-37.8171749, 144.9632263], 'zoom': 14, 'name': 'Melbourne'},
-            {'loc': [-41.2903189, 174.7790909], 'zoom': 15, 'name': 'Wellington'}
+            {'loc': [-36.8578, 174.7584], 'zoom': 12, 'name': 'Auckland'},
+            {'loc': [37.7755, -122.4031], 'zoom': 12, 'name': 'San Fran'},
+            {'loc': [49.2576, -123.1193], 'zoom': 12, 'name': 'Vancouver'},
+            {'loc': [43.6476, -79.3752], 'zoom': 12, 'name': 'Toronto'}
         ],
         strings: {
             title: "Show me other locations"
