@@ -196,13 +196,13 @@ app.controller('SearchController', function($scope, $rootScope, $sce, $http) {
   });
 
   $scope.keyPressed = function(ev) {
-    if (ev.which == 13) {
-      $("#suggestresults").addClass("smaller");
-      $scope.fullTextSearch();
-    } else {
-      $("#suggestresults").removeClass("smaller");
-      $rootScope.$emit('hidesearch');
-    }
+    // if (ev.which == 13) {
+      // $("#suggestresults").addClass("smaller");
+      // $scope.fullTextSearch();
+    // } else {
+      // $("#suggestresults").removeClass("smaller");
+      // $rootScope.$emit('hidesearch');
+    // }
   }
 
   $scope.onFocus = function(ev) {
