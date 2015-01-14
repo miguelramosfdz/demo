@@ -149,7 +149,8 @@ app.controller('SearchController', function($scope, $rootScope, $sce, $http) {
         lat: $rootScope.geobase ? $rootScope.geobase.lat : 0,
         lon: $rootScope.geobase ? $rootScope.geobase.lon : 0,
         zoom:$rootScope.geobase ? $rootScope.geobase.zoom : 12,
-        size: 10
+        size: 10,
+        layers: 'openaddresses'
       },
       headers: { 'Accept': 'application/json' }
     }).success(function (data, status, headers, config) {
